@@ -104,11 +104,28 @@ int tlsaccept(SSL *ssl){
 	return 0;
 }
 
-int tlsconnect(SSL *ssl){
+int tlsconnect(SSL *ssl, short verifybool){
 	//send client hello
 	if (SSL_connect(ssl) <= 0) {
 		ERR_print_errors_fp(stderr);
 		return -1;
+	}
+
+	X509 *x = SSL_get_peer_certificate(ssl);
+	if( x != NULL)
+	{
+		//TODO: own custom verification here ?
+		X509_free(x);
+		if (SSL_get_verify_result(ssl) != X509_V_OK && verifybool) {
+			int cres = SSL_get_verify_result(ssl);
+			fprintf(stderr, "invalid X509 certificate: %d\n", cres);
+			return -1;
+		}
+	}else{
+		if(verifybool){
+			fprintf(stderr, "missing peer X509 certificate\n");
+			return -1;
+		}
 	}
 	return 0;
 }

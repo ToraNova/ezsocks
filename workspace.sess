@@ -8,13 +8,13 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +1 eztcp.h
-badd +0 eztcp.c
+badd +1 eztcp.c
 badd +1 eztls.h
-badd +0 eztls.c
+badd +1 eztls.c
 badd +1 tests/atcp.c
-badd +0 tests/btcp.c
+badd +1 tests/btcp.c
 badd +1 tests/atls.c
-badd +0 tests/btls.c
+badd +1 tests/btls.c
 argglobal
 %argdel
 $argadd eztcp.h
@@ -45,11 +45,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 26) / 52)
+let s:l = 2 - ((1 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+2
 normal! 0
 wincmd w
 argglobal
@@ -63,7 +63,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 26) / 52)
+let s:l = 1 - ((0 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -88,6 +88,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 103 + 103) / 207)
 exe 'vert 2resize ' . ((&columns * 103 + 103) / 207)
 argglobal
+if bufexists("eztls.h") | buffer eztls.h | else | edit eztls.h | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -97,12 +98,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 51)
+let s:l = 45 - ((39 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+45
+normal! 041|
 lcd ~/prodev/ezsocks
 wincmd w
 argglobal
@@ -116,12 +117,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 51)
+let s:l = 118 - ((28 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+118
+normal! 029|
 lcd ~/prodev/ezsocks
 wincmd w
 exe 'vert 1resize ' . ((&columns * 103 + 103) / 207)
@@ -142,6 +143,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 103 + 103) / 207)
 exe 'vert 2resize ' . ((&columns * 103 + 103) / 207)
 argglobal
+if bufexists("~/prodev/ezsocks/tests/atls.c") | buffer ~/prodev/ezsocks/tests/atls.c | else | edit ~/prodev/ezsocks/tests/atls.c | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -151,12 +153,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 51)
+let s:l = 30 - ((24 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+30
+normal! 09|
 lcd ~/prodev/ezsocks
 wincmd w
 argglobal
@@ -196,6 +198,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 103 + 103) / 207)
 exe 'vert 2resize ' . ((&columns * 103 + 103) / 207)
 argglobal
+if bufexists("~/prodev/ezsocks/tests/atcp.c") | buffer ~/prodev/ezsocks/tests/atcp.c | else | edit ~/prodev/ezsocks/tests/atcp.c | endif
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -205,11 +208,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 51)
+let s:l = 4 - ((3 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+4
 normal! 0
 lcd ~/prodev/ezsocks
 wincmd w
@@ -224,18 +227,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 51)
+let s:l = 34 - ((33 * winheight(0) + 25) / 51)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+34
 normal! 0
 lcd ~/prodev/ezsocks
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 103 + 103) / 207)
 exe 'vert 2resize ' . ((&columns * 103 + 103) / 207)
-tabnext 4
+tabnext 3
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

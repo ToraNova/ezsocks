@@ -42,7 +42,7 @@ int tlsgen(
 		SSL **ssl
 );
 int tlsaccept(SSL *ssl);
-int tlsconnect(SSL *ssl);
+int tlsconnect(SSL *ssl, short verifybool);
 int tlsclose(SSL *ssl);
 
 int tlswrite(SSL *ssl, unsigned char *buf, size_t len);

@@ -53,12 +53,14 @@ int main(int argc, char *argv[]){
 	rc = tlswrite(ssl, buf, rc);
 	printf("tls sent      : %d byte(s)\n",rc);
 
-	tlsclose(ssl);
-	sockclose(c);
-	sockclose(s);
 
 	//cleanup
+	tlsclose(ssl);
 	tlscleanup();
+
+	//tcp cleanup
+	sockclose(c);
+	sockclose(s);
 
 	return 0;
 }

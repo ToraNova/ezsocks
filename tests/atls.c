@@ -23,12 +23,15 @@ int main(int argc, char *argv[]){
 	tlsinit();
 
 	SSL *ssl;
-	rc = tlsgen(sock, 0, NULL, NULL, NULL, &ssl);
+
+	//rc = tlsgen(sock, 0, NULL, NULL, NULL, &ssl); //no cacert. tlsconnect(*,0)
+	//rc = tlsgen(sock, 0, "tests/ssl/cacert.pem", NULL, NULL, &ssl); //tlsconnect(*,1)
+	rc = tlsgen(sock, 0, "tests/ssl/bobcert.pem", NULL, NULL, &ssl); //tlsconnect(*,1)
 	if(rc < 0){
 		return 1;
 	}
 
-	rc = tlsconnect(ssl); //initiate tls handshake
+	rc = tlsconnect(ssl,1); //initiate tls handshake
 	if(rc < 0){
 		return 1;
 	}
@@ -43,7 +46,11 @@ int main(int argc, char *argv[]){
 	printf("tls recv : %d byte(s)\n",rc);
 
 	//cleanup
+	tlsclose(ssl);
 	tlscleanup();
+
+	//tcp cleanup
+	sockclose(sock);
 
 	return 0;
 }
