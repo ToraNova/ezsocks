@@ -7,17 +7,17 @@
 #################################################################
 
 SRCDIR   = .
-OBJDIR   = .
+OBJDIR   = bin
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJECTFULL = $(OBJDIR)/*.o
 
 TESTDIR = tests
 TESTS := $(wildcard $(TESTDIR)/*.c)
-TESTP := $(TESTS:$(TESTDIR)/%.c=$(TESTDIR)/%.testbin)
+TESTP := $(TESTS:$(TESTDIR)/%.c=$(OBJDIR)/%.testbin)
 
 CC = gcc
-CLIBS =
+CLIBS = -lssl -lcrypto
 CFLAGS= -O3 -Wall -march=native
 
 .PHONY: all clean test
@@ -25,16 +25,16 @@ CFLAGS= -O3 -Wall -march=native
 
 all: test
 	@echo 'ezsock make all done.'
-	@ls $(TESTDIR)
+	@ls $(OBJDIR)/*.testbin
 
 test: $(TESTP)
 	@echo 'ezsock make test done.'
 
 clean:
 	rm -f $(OBJDIR)/*.o
-	rm -f $(TESTDIR)/*.testbin
+	rm -f $(OBJDIR)/*.testbin
 
-$(TESTP) : $(TESTDIR)/%.testbin : $(TESTDIR)/%.c $(OBJECTS)
+$(TESTP) : $(OBJDIR)/%.testbin : $(TESTDIR)/%.c $(OBJECTS)
 	$(CC) $^ -o $@ $(CLIBS) $(CFLAGS)
 
 # compile objects

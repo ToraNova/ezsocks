@@ -159,8 +159,9 @@ int sendbuf(int sock, unsigned char *sendbuffer, size_t buflen){
 
 	//code enters here when setup is successful
 	while( bleft > 0 ){
-		if(buflen > EZTCP_BATCHSZ) thisbatch = EZTCP_BATCHSZ;
+		if(bleft > EZTCP_BATCHSZ) thisbatch = EZTCP_BATCHSZ;
 		else thisbatch = bleft;
+		if(thisbatch == 0)break;
 		sent = send(sock, sendbuffer+ptrindex, thisbatch,0);
 		if(sent == -1)break;
 		ptrindex += sent;
@@ -185,16 +186,13 @@ int fixedrecvbuf(int sock, unsigned char *recvbuffer, size_t buflen){
 	int brecv = 0;
 
 	while( bleft > 0 ){
-		if(buflen > EZTCP_BATCHSZ) thisbatch = EZTCP_BATCHSZ;
+		if(bleft > EZTCP_BATCHSZ) thisbatch = EZTCP_BATCHSZ;
 		else thisbatch = bleft;
+		if(thisbatch == 0)break;
 		brecv = recv(sock, recvbuffer+ptrindex, thisbatch,0); //here it will block
 		if(brecv <= 0)break;
 		ptrindex += brecv;
 		bleft -= brecv;
-	}
-	if(brecv < 0){
-		perror("fixedrecvbuf brecv");
-		return brecv;
 	}
 	return ptrindex;
 }
